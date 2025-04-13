@@ -227,7 +227,7 @@ def add_humidity_vars(nc_file):
             )
             rh_var.setncatts(rh_attrs)
             rh_var[:] = rh
-        # 创建绝对湿度变量
+        # 创建比湿度变量
         if 'SPFH_2maboveground' not in ds.variables:
             ah_attrs = copy_var_metadata(template_var, 'SPFH_2maboveground', {
                 'short_name': 'SPFH_2maboveground',
