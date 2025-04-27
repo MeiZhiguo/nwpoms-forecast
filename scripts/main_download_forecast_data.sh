@@ -32,7 +32,7 @@ echo "$(date '+%Y-%m-%d %H:%M:%S') 开始下载RTOFS数据" >> rtofs_download_lo
 echo "$(date '+%Y-%m-%d %H:%M:%S') RTOFS下载完成" >> rtofs_download_log.txt
 
 ###################################################################################
-#                        安排 MERCATOR 下载任务到15:00执行                          #
+#                        安排 MERCATOR 下载任务到14:00执行                          #
 ###################################################################################
 
 # 创建临时脚本
@@ -53,12 +53,12 @@ EOF
 # 设置执行权限
 chmod +x ${tmp_script}
 
-# 计算延迟执行时间（当天17:00）
+# 计算延迟执行时间（当天14:00）
 current_hour=$(date +%H)
 if [ ${current_hour#0} -lt 15 ]; then
-    target_time="15:00"
+    target_time="14:00"
 else
-    target_time="15:00 tomorrow"
+    target_time="14:00 tomorrow"
 fi
 
 # 提交at任务
