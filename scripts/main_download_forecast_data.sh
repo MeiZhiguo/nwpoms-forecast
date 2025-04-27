@@ -32,6 +32,41 @@ echo "$(date '+%Y-%m-%d %H:%M:%S') 开始下载RTOFS数据" >> rtofs_download_lo
 echo "$(date '+%Y-%m-%d %H:%M:%S') RTOFS下载完成" >> rtofs_download_log.txt
 
 ###################################################################################
+#                        安排 MERCATOR 下载任务到15:00执行                          #
+###################################################################################
+
+# 创建临时脚本
+tmp_script="${jobdir}mercator_script_$(date '+%Y-%m-%d').sh"
+# 删除昨天的临时脚本
+rm -rf "${jobdir}mercator_script_$(date -d -1days '+%Y-%m-%d').sh"
+# 写入临时脚本
+cat > ${tmp_script} <<'EOF'
+#!/bin/bash
+export LANG=en_US.UTF-8
+export TZ=Asia/Shanghai
+
+echo "$(date '+%Y-%m-%d %H:%M:%S') 开始下载MERCATOR数据" >> mercator_download_log.txt
+python download_mercator_global_forecast.py >> mercator_download_log.txt 2>&1
+echo "$(date '+%Y-%m-%d %H:%M:%S') MERCATOR数据下载完成" >> mercator_download_log.txt
+EOF
+
+# 设置执行权限
+chmod +x ${tmp_script}
+
+# 计算延迟执行时间（当天17:00）
+current_hour=$(date +%H)
+if [ ${current_hour#0} -lt 15 ]; then
+    target_time="15:00"
+else
+    target_time="15:00 tomorrow"
+fi
+
+# 提交at任务
+echo "${tmp_script}" | at -M  ${target_time} 2>> at_job.log
+
+echo "$(date '+%Y-%m-%d %H:%M:%S') 已提交MERCATOR下载任务到 ${target_time}" >> at_job.log
+
+###################################################################################
 #                       安排GFS和ECMWF下载任务到16:00执行                         #
 ###################################################################################
 
