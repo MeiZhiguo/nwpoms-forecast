@@ -87,8 +87,12 @@ def extract_date_from_filename(file, dataset_type):
 for dataset_id, temp_file in dataset_config:
     print(f"\n{'=' * 40}\nProcessing dataset: {dataset_id}\nTemporary file: {temp_file}\n{'=' * 40}")
 
-    #clear temp files
-    os.remove(temp_file)
+    # Clear temp files with existence check
+    if os.path.exists(temp_file):
+        os.remove(temp_file)
+        print(f"Temporary file {temp_file} has been removed")
+    else:
+        print(f"Temporary file {temp_file} does not exist, skipping deletion")
 
     # Generate file list
     copernicusmarine.get(
