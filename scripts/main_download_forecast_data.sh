@@ -108,8 +108,6 @@ echo "$(date '+%Y-%m-%d %H:%M:%S') 开始下载GFS波浪数据" >> gfs_wave_down
 echo "$(date '+%Y-%m-%d %H:%M:%S') GFS波浪数据下载完成" >> gfs_wave_download_log.txt
 
 # ECMWF大气数据下载
-ecmwf_atoms_output_dir="/data/nwpoms-forecast/ecmwf/atoms/${dt}/"
-mkdir -p ${ecmwf_atoms_output_dir}
 rm -rf ecmwf_atoms_download_log.txt
 
 echo "$(date '+%Y-%m-%d %H:%M:%S') 开始下载ECMWF数据" >> ecmwf_atoms_download_log.txt
