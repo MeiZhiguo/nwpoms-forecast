@@ -45,6 +45,8 @@ cat > ${tmp_script} <<'EOF'
 export LANG=en_US.UTF-8
 export TZ=Asia/Shanghai
 
+rm -rf mercator_download_log.txt
+
 echo "$(date '+%Y-%m-%d %H:%M:%S') 开始下载MERCATOR数据" >> mercator_download_log.txt
 python download_mercator_global_forecast.py >> mercator_download_log.txt 2>&1
 echo "$(date '+%Y-%m-%d %H:%M:%S') MERCATOR数据下载完成" >> mercator_download_log.txt
